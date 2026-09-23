@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
@@ -76,17 +77,17 @@ fun TodoScreen(
     val existingTodos = activeTodos.map { it.name }.toSet()
 
     // Tag filter + done/not-done split
-    val all = remember { Tag(id = ALL_TAG_ID, name = "All") }
-    val tagsWithAll = listOf(all) + tags
-    val selected = tagsWithAll.find { it.id == viewModel.selectedTagId } ?: all
+    val allTag = remember { Tag(id = ALL_TAG_ID, name = "All") }
+    val selected = tags.find { it.id == viewModel.selectedTagId } ?: allTag
     val filteredTodos = remember(activeTodos, selected, todoTagsMap) {
-        if (selected == all) activeTodos
+        if (selected == allTag) activeTodos
         else activeTodos.filter { todo -> todoTagsMap[todo.id]?.contains(selected) == true }
     }
     var todosNotDone by remember(filteredTodos) {
         mutableStateOf(filteredTodos.filter { !it.completed })
     }
     val todosDone = filteredTodos.filter { it.completed }
+    var tagsList by remember(tags) { mutableStateOf(tags) }
 
     // UI state
     var showDialog by remember { mutableStateOf(false) }
@@ -96,8 +97,14 @@ fun TodoScreen(
     var todoBeingEdited by remember { mutableStateOf<Todo?>(null) }
     var todoBeingDeleted by remember { mutableStateOf<Todo?>(null) }
     val lazyListState = rememberLazyListState()
+    val lazyTagState = rememberLazyListState()
     val reorderableState = rememberReorderableLazyListState(lazyListState) { from, to ->
         todosNotDone = todosNotDone.toMutableList().apply {
+            add(to.index, removeAt(from.index))
+        }
+    }
+    val reorderableStateForTags = rememberReorderableLazyListState(lazyTagState) { from, to ->
+        tagsList = tagsList.toMutableList().apply {
             add(to.index, removeAt(from.index))
         }
     }
@@ -124,6 +131,11 @@ fun TodoScreen(
             todoDao.updateTodos(reorderedList)
         }
     }
+    val onSortOrderUpdateForTag: (List<Tag>) -> Unit = { reorderedList ->
+        coroutineScope.launch {
+            tagDao.updateTags(reorderedList)
+        }
+    }
     val onDragStopped: () -> Unit = {
         val size = todosNotDone.size
         val reordered = todosNotDone.mapIndexed { index, t ->
@@ -133,21 +145,33 @@ fun TodoScreen(
         onSortOrderUpdate(reordered)
     }
 
+    val onDragTagStopped: () -> Unit = {
+        val size = tagsList.size
+        val reordered = tagsList.mapIndexed { index, t ->
+            t.copy(sortOrder = size - 1 - index)
+        }
+        tagsList = reordered
+        onSortOrderUpdateForTag(reordered)
+    }
+
     if (activeTodos.isEmpty()) {
         EmptyState(pageName = Screen.TODO, onClick = { showDialog = true })
     } else {
         Column(modifier = modifier.fillMaxSize()) {
             TodoFilterRow(
-                tags = tagsWithAll,
+                allTag = allTag,
+                tags = tagsList,
                 selected = selected,
                 onSelect = { viewModel.selectTag(it.id) },
-                onAddTagClick = { showTagInputField = true }
+                reorderableState = reorderableStateForTags,
+                onAddTagClick = { showTagInputField = true },
+                onDragStopped = onDragTagStopped
             )
             TodoList(
                 todosNotDone = todosNotDone,
                 todosDone = todosDone,
                 todoTagsMap = todoTagsMap,
-                showTags = selected == all,
+                showTags = selected == allTag,
                 doneExpanded = doneExpanded,
                 onDoneToggle = { doneExpanded = !doneExpanded },
                 lazyListState = lazyListState,
@@ -210,7 +234,7 @@ fun TodoScreen(
     if (showDialog) {
         AddTodoDialog(
             tags = tags,
-            todoTags = if (selected != all) listOf(selected) else emptyList(),
+            todoTags = if (selected != allTag) listOf(selected) else emptyList(),
             existingTodoNames = existingTodos,
             onDismiss = { showDialog = false },
             onConfirm = { todo, selectedTags ->
@@ -228,39 +252,60 @@ fun TodoScreen(
 
 @Composable
 private fun TodoFilterRow(
+    allTag: Tag,
     tags: List<Tag>,
     selected: Tag,
+    reorderableState: ReorderableLazyListState,
     onSelect: (Tag) -> Unit,
     onAddTagClick: () -> Unit,
+    onDragStopped: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val chipsScrollState = rememberScrollState()
+
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 14.dp, end = 14.dp, top = 14.dp)
-            .nestedScroll(object : NestedScrollConnection {
-                override fun onPostScroll(
-                    consumed: Offset,
-                    available: Offset,
-                    source: NestedScrollSource
-                ): Offset = available
-            })
-            .horizontalScroll(chipsScrollState),
+            .padding(start = 14.dp, end=14.dp, top = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        tags.forEach { tag ->
-            FilterChip(
-                selected = selected == tag,
-                onClick = { onSelect(tag) },
-                label = { Text(tag.name) }
-            )
+        LazyRow(
+            modifier = Modifier
+                .weight(1f)
+                .nestedScroll(object : NestedScrollConnection {
+                    override fun onPostScroll(
+                        consumed: Offset,
+                        available: Offset,
+                        source: NestedScrollSource
+                    ): Offset = available
+                }),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
+                FilterChip(
+                    selected = selected == allTag,
+                    onClick = { onSelect(allTag) },
+                    label = { Text(allTag.name) },
+                )
+            }
+            items(tags, key = { it.id }) { tag ->
+                ReorderableItem(reorderableState, tag.id) {
+                    FilterChip(
+                        selected = selected == tag,
+                        onClick = { onSelect(tag) },
+                        label = { Text(tag.name) },
+                        modifier = Modifier.longPressDraggableHandle(
+                            onDragStopped = { onDragStopped() }
+                        )
+                    )
+                }
+            }
         }
         IconButton(
             onClick = onAddTagClick,
             modifier = Modifier
-                .size(32.dp)
-                .align(Alignment.CenterVertically)
+                .size(25.dp)
         ) {
             Icon(Icons.Default.Add, contentDescription = "Add tag")
         }
