@@ -1,4 +1,4 @@
-# Kaam Sutra
+# Sobeit
 
 It is a todo app BUT with a twist.
 

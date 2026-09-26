@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "KaamSutra"
+rootProject.name = "Sobeit"
 include(":app")
