@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.goals
+package com.pandeyganesha.sobeit.ui.components.goals
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.AlertDialog
@@ -12,13 +12,13 @@ import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.Modifier
-import com.pandeyganesha.kaamsutra.data.Goal
-import com.pandeyganesha.kaamsutra.ui.components.utils.DatePickerField
-import com.pandeyganesha.kaamsutra.ui.components.utils.TaskInputField
+import com.pandeyganesha.sobeit.data.Goal
+import com.pandeyganesha.sobeit.ui.components.utils.DatePickerField
+import com.pandeyganesha.sobeit.ui.components.utils.TaskInputField
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.ui.unit.dp
-import com.pandeyganesha.kaamsutra.Screen
+import com.pandeyganesha.sobeit.Screen
 
 @Composable
 fun AddGoalDialog(

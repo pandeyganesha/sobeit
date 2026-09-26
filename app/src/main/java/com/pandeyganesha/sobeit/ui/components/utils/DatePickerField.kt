@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.utils
+package com.pandeyganesha.sobeit.ui.components.utils
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

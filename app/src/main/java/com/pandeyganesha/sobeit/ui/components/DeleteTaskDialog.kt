@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components
+package com.pandeyganesha.sobeit.ui.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton

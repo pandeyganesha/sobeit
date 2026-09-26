@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.habits
+package com.pandeyganesha.sobeit.ui.components.habits
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -31,14 +31,14 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.pandeyganesha.kaamsutra.MyApp
-import com.pandeyganesha.kaamsutra.Screen
-import com.pandeyganesha.kaamsutra.data.Habit
-import com.pandeyganesha.kaamsutra.data.HabitLog
-import com.pandeyganesha.kaamsutra.data.Status
-import com.pandeyganesha.kaamsutra.periodStartDateFor
-import com.pandeyganesha.kaamsutra.ui.components.DeleteTaskDialog
-import com.pandeyganesha.kaamsutra.ui.components.EmptyState
+import com.pandeyganesha.sobeit.MyApp
+import com.pandeyganesha.sobeit.Screen
+import com.pandeyganesha.sobeit.data.Habit
+import com.pandeyganesha.sobeit.data.HabitLog
+import com.pandeyganesha.sobeit.data.Status
+import com.pandeyganesha.sobeit.periodStartDateFor
+import com.pandeyganesha.sobeit.ui.components.DeleteTaskDialog
+import com.pandeyganesha.sobeit.ui.components.EmptyState
 import kotlinx.coroutines.launch
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.ReorderableLazyListState

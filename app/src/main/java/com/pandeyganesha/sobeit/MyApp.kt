@@ -1,8 +1,8 @@
-package com.pandeyganesha.kaamsutra
+package com.pandeyganesha.sobeit
 
 import android.app.Application
-import com.pandeyganesha.kaamsutra.data.AppDatabase
-import com.pandeyganesha.kaamsutra.data.DatabaseProvider
+import com.pandeyganesha.sobeit.data.AppDatabase
+import com.pandeyganesha.sobeit.data.DatabaseProvider
 
 class MyApp : Application() {
     lateinit var db: AppDatabase

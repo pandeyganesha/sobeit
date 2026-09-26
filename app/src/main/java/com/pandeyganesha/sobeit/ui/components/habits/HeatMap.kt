@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.habits
+package com.pandeyganesha.sobeit.ui.components.habits
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -7,8 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.pandeyganesha.kaamsutra.data.Habit
-import com.pandeyganesha.kaamsutra.data.HabitLog
+import com.pandeyganesha.sobeit.data.Habit
+import com.pandeyganesha.sobeit.data.HabitLog
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import java.time.DayOfWeek

@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.todos
+package com.pandeyganesha.sobeit.ui.components.todos
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -38,15 +38,15 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.pandeyganesha.kaamsutra.MyApp
-import com.pandeyganesha.kaamsutra.Screen
-import com.pandeyganesha.kaamsutra.data.Status
-import com.pandeyganesha.kaamsutra.data.Tag
-import com.pandeyganesha.kaamsutra.data.Todo
-import com.pandeyganesha.kaamsutra.data.TodoTag
-import com.pandeyganesha.kaamsutra.ui.components.CollapsibleSectionHeader
-import com.pandeyganesha.kaamsutra.ui.components.DeleteTaskDialog
-import com.pandeyganesha.kaamsutra.ui.components.EmptyState
+import com.pandeyganesha.sobeit.MyApp
+import com.pandeyganesha.sobeit.Screen
+import com.pandeyganesha.sobeit.data.Status
+import com.pandeyganesha.sobeit.data.Tag
+import com.pandeyganesha.sobeit.data.Todo
+import com.pandeyganesha.sobeit.data.TodoTag
+import com.pandeyganesha.sobeit.ui.components.CollapsibleSectionHeader
+import com.pandeyganesha.sobeit.ui.components.DeleteTaskDialog
+import com.pandeyganesha.sobeit.ui.components.EmptyState
 import kotlinx.coroutines.launch
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.ReorderableLazyListState

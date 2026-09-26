@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.data
+package com.pandeyganesha.sobeit.data
 
 import android.content.Context
 import androidx.work.CoroutineWorker
@@ -7,7 +7,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import java.time.DayOfWeek
-import com.pandeyganesha.kaamsutra.ui.components.habits.RepeatType
+import com.pandeyganesha.sobeit.ui.components.habits.RepeatType
 import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 import java.time.Month

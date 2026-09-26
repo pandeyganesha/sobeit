@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.theme
+package com.pandeyganesha.sobeit.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

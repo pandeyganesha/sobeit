@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.todos
+package com.pandeyganesha.sobeit.ui.components.todos
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -22,8 +22,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextDecoration
-import com.pandeyganesha.kaamsutra.data.Tag
-import com.pandeyganesha.kaamsutra.data.Todo
+import com.pandeyganesha.sobeit.data.Tag
+import com.pandeyganesha.sobeit.data.Todo
 
 
 @Composable

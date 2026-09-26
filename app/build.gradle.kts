@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.pandeyganesha.kaamsutra"
+    namespace = "com.pandeyganesha.sobeit"
     compileSdk {
         version = release(37) {
             minorApiLevel = 1
@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.pandeyganesha.kaamsutra"
+        applicationId = "com.pandeyganesha.sobeit"
         minSdk = 26
         targetSdk = 37
         versionCode = 1

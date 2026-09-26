@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components
+package com.pandeyganesha.sobeit.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

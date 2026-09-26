@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.todos
+package com.pandeyganesha.sobeit.ui.components.todos
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.graphics.Color
@@ -21,11 +21,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import com.pandeyganesha.kaamsutra.data.Todo
+import com.pandeyganesha.sobeit.data.Todo
 import androidx.compose.ui.unit.dp
-import com.pandeyganesha.kaamsutra.Screen
-import com.pandeyganesha.kaamsutra.data.Tag
-import com.pandeyganesha.kaamsutra.ui.components.utils.TaskInputField
+import com.pandeyganesha.sobeit.Screen
+import com.pandeyganesha.sobeit.data.Tag
+import com.pandeyganesha.sobeit.ui.components.utils.TaskInputField
 
 
 @Composable

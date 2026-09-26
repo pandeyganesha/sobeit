@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra
+package com.pandeyganesha.sobeit
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.pandeyganesha.kaamsutra.ui.theme.KaamSutraTheme
-import com.pandeyganesha.kaamsutra.data.Habit
+import com.pandeyganesha.sobeit.ui.theme.SobeitTheme
+import com.pandeyganesha.sobeit.data.Habit
 import androidx.compose.runtime.Composable
 import java.time.LocalDate
 import android.Manifest
@@ -29,13 +29,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.pandeyganesha.kaamsutra.data.scheduleTestNotification
-import com.pandeyganesha.kaamsutra.data.scheduleMissedHabitSettlement
-import com.pandeyganesha.kaamsutra.ui.components.AppTopBar
-import com.pandeyganesha.kaamsutra.ui.components.habits.HabitScreen
-import com.pandeyganesha.kaamsutra.ui.components.goals.GoalScreen
-import com.pandeyganesha.kaamsutra.ui.components.todos.TodoScreen
-import com.pandeyganesha.kaamsutra.ui.components.habits.RepeatType
+import com.pandeyganesha.sobeit.data.scheduleTestNotification
+import com.pandeyganesha.sobeit.data.scheduleMissedHabitSettlement
+import com.pandeyganesha.sobeit.ui.components.AppTopBar
+import com.pandeyganesha.sobeit.ui.components.habits.HabitScreen
+import com.pandeyganesha.sobeit.ui.components.goals.GoalScreen
+import com.pandeyganesha.sobeit.ui.components.todos.TodoScreen
+import com.pandeyganesha.sobeit.ui.components.habits.RepeatType
 import java.time.DayOfWeek
 
 
@@ -59,8 +59,8 @@ class MainActivity : ComponentActivity() {
             intent.getSerializableExtra("notif_screen") as? Screen ?: Screen.HABITS
         }
         setContent {
-            KaamSutraTheme {
-                KaamSutraApp(screenToOpen)
+            SobeitTheme {
+                SobeitApp(screenToOpen)
             }
         }
     }
@@ -83,7 +83,7 @@ fun periodStartDateFor(habit: Habit, date: LocalDate): LocalDate {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun KaamSutraApp(screenToOpen: Screen) {
+fun SobeitApp(screenToOpen: Screen) {
 
     val pagerState = rememberPagerState(
         initialPage = Screen.HABITS.ordinal,

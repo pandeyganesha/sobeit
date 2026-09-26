@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.data
+package com.pandeyganesha.sobeit.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 import androidx.room.OnConflictStrategy
 import androidx.room.Update
-import com.pandeyganesha.kaamsutra.ui.components.habits.RepeatType
+import com.pandeyganesha.sobeit.ui.components.habits.RepeatType
 
 
 @Entity(tableName = "habits")

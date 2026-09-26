@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra
+package com.pandeyganesha.sobeit
 
 import org.junit.Test
 

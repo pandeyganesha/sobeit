@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.habits
+package com.pandeyganesha.sobeit.ui.components.habits
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.graphics.Color
@@ -26,9 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pandeyganesha.kaamsutra.Screen
-import com.pandeyganesha.kaamsutra.data.Habit
-import com.pandeyganesha.kaamsutra.ui.components.utils.TaskInputField
+import com.pandeyganesha.sobeit.Screen
+import com.pandeyganesha.sobeit.data.Habit
+import com.pandeyganesha.sobeit.ui.components.utils.TaskInputField
 
 enum class RepeatType(val displayName: String) {
     DAILY("Daily"),

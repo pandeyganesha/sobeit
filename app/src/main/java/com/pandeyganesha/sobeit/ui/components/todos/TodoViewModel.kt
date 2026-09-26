@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.todos
+package com.pandeyganesha.sobeit.ui.components.todos
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

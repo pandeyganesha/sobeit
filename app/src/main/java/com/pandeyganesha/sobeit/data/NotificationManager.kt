@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.data
+package com.pandeyganesha.sobeit.data
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -15,8 +15,8 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.pandeyganesha.kaamsutra.MainActivity
-import com.pandeyganesha.kaamsutra.Screen
+import com.pandeyganesha.sobeit.MainActivity
+import com.pandeyganesha.sobeit.Screen
 import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 
@@ -71,7 +71,7 @@ class NotificationWorker(
 
         // Build the notification
         val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(com.pandeyganesha.kaamsutra.R.mipmap.ic_launcher) // System icon for illustration
+            .setSmallIcon(com.pandeyganesha.sobeit.R.mipmap.ic_launcher) // System icon for illustration
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

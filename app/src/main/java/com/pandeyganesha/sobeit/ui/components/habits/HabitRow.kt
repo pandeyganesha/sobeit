@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.habits
+package com.pandeyganesha.sobeit.ui.components.habits
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -22,9 +22,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.pandeyganesha.kaamsutra.R
-import com.pandeyganesha.kaamsutra.data.Habit
-import com.pandeyganesha.kaamsutra.data.HabitLog
+import com.pandeyganesha.sobeit.R
+import com.pandeyganesha.sobeit.data.Habit
+import com.pandeyganesha.sobeit.data.HabitLog
 
 @Composable
 fun HabitRow(

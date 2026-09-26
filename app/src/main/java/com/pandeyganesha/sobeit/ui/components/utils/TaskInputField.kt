@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.components.utils
+package com.pandeyganesha.sobeit.ui.components.utils
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box

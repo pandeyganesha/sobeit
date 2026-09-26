@@ -1,4 +1,4 @@
-package com.pandeyganesha.kaamsutra.ui.theme
+package com.pandeyganesha.sobeit.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun KaamSutraTheme(
+fun SobeitTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
