@@ -195,7 +195,13 @@ fun TodoScreen(
                     deletedTags.forEach { tagDao.deleteTag(it) }
                 }
                 showTagInputField = false
-            }
+            },
+            onSortOrderUpdate = { reorderedTags ->
+                coroutineScope.launch {
+                    tagDao.updateTags(reorderedTags)
+                }
+            },
+            modifier
         )
     }
     todoBeingDeleted?.let { todo ->
@@ -289,7 +295,7 @@ private fun TodoFilterRow(
                     label = { Text(allTag.name) },
                 )
             }
-            items(tags, key = { it.id }) { tag ->
+            items(tags.sortedByDescending { it.sortOrder }, key = { it.id }) { tag ->
                 ReorderableItem(reorderableState, tag.id) {
                     FilterChip(
                         selected = selected == tag,
