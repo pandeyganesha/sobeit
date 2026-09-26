@@ -28,19 +28,26 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.mohamedrejeb.compose.dnd.DragAndDropContainer
+import com.mohamedrejeb.compose.dnd.drag.isDragging
+import com.mohamedrejeb.compose.dnd.rememberDragAndDropState
+import com.mohamedrejeb.compose.dnd.reorder.reorderableItem
 
 @Composable
 fun EditTagDialog(
     tags: List<Tag> = emptyList(),
     onDismiss: () -> Unit,
     onConfirm: (createdTags: List<Tag>, deletedTags: List<Tag>) -> Unit,
-    modifier: Modifier = Modifier
+    onSortOrderUpdate: (List<Tag>) -> Unit,
+    modifier: Modifier
 ) {
     val editedTags = remember { mutableStateListOf<Tag>().apply { addAll(tags) } }
     val createdTags = remember { mutableStateListOf<Tag>() }
@@ -49,7 +56,17 @@ fun EditTagDialog(
     var newTag by remember { mutableStateOf("") }
     var tagError by remember { mutableStateOf<String?>(null) }
     val keyboard = LocalSoftwareKeyboardController.current
+    val dndState = rememberDragAndDropState<Tag>()
 
+    val onDragStopped: () -> Unit = {
+        val size = editedTags.size
+        val reordered = editedTags.mapIndexed { index, goal ->
+            goal.copy(sortOrder = size - 1 - index)
+        }
+        editedTags.clear()
+        editedTags.addAll(reordered)
+        onSortOrderUpdate(reordered)
+    }
 
     Dialog(onDismissRequest = onDismiss) {
         Column(modifier
@@ -61,36 +78,67 @@ fun EditTagDialog(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(vertical = 10.dp)
             )
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                verticalArrangement = Arrangement.spacedBy(3.dp)
-            ) {
-                editedTags.forEach { tag ->
-                    InputChip(
-                        selected = false,
-                        onClick = { },
-                        label = { Text(tag.name) },
-                        trailingIcon = {
-                            Icon(
-                                Icons.Default.Close,
-                                contentDescription = "Remove tag",
+            DragAndDropContainer(state = dndState) {
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(3.dp)
+                ) {
+                    editedTags.forEach { tag ->
+                        key(tag.id)
+                        {
+                            InputChip(
+                                selected = false,
+                                onClick = { },
+                                label = { Text(tag.name) },
+                                trailingIcon = {
+                                    Icon(
+                                        Icons.Default.Close,
+                                        contentDescription = "Remove tag",
+                                        modifier = Modifier
+                                            .size(InputChipDefaults.AvatarSize)
+                                            .clickable {
+                                                editedTags.remove(tag)
+                                                // only mark as "deleted" if it existed in DB already;
+                                                // if it was just created in this session, cancel it out instead
+                                                if (createdTags.remove(tag)) {
+                                                    // it was a fresh, unsaved tag — nothing to delete from DB
+                                                } else {
+                                                    deletedTags.add(tag)
+                                                }
+                                            }
+                                    )
+                                },
                                 modifier = Modifier
-                                    .size(InputChipDefaults.AvatarSize)
-                                    .clickable {
-                                        editedTags.remove(tag)
-                                        // only mark as "deleted" if it existed in DB already;
-                                        // if it was just created in this session, cancel it out instead
-                                        if (createdTags.remove(tag)) {
-                                            // it was a fresh, unsaved tag — nothing to delete from DB
-                                        } else {
-                                            deletedTags.add(tag)
-                                        }
+                                    .height(32.dp)
+                                    .graphicsLayer {
+                                        alpha = if (dndState.isDragging(tag.id)) 0f else 1f
                                     }
+                                    .reorderableItem(
+                                        key = tag.id,
+                                        data = tag,
+                                        state = dndState,
+                                        onDragEnter = { state ->
+                                            editedTags.apply {
+                                                val index = indexOf(tag)
+                                                if (index != -1) {
+                                                    remove(state.data)
+                                                    add(index, state.data)
+                                                }
+                                            }
+                                        },
+                                        onDrop = { onDragStopped() },
+                                        draggableContent = {
+                                            InputChip(
+                                                selected = false,
+                                                onClick = { },
+                                                label = { Text(tag.name) }
+                                            )
+                                        }
+                                    )
                             )
-                        },
-                        modifier = Modifier.height(32.dp)
-                    )
+                        }
+                    }
                 }
             }
             OutlinedTextField(
